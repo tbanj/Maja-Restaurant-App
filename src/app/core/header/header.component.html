@@ -1,0 +1,271 @@
+
+
+
+
+
+
+
+
+  <div class=".row .no-gutter">
+      <nav class="navbar navbar-expand-lg navbar-light ">
+        
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+         data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+          aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse navbar-brand justify-content-between"
+     id="navbarNavAltMarkup">
+     <ul class="nav nav-tabs" id="recipebookTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active " id="home-tab" data-toggle="tab" role="tab" aria-controls="recipe book" aria-selected="true" 
+          routerLinkActive="active" routerLink="/"
+            [routerLinkActiveOptions]="{exact:true}">Recipe Book</a>
+        
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="recipes-tab" data-toggle="tab" routerLinkActive="active"  routerLink="/recipes" role="tab" aria-controls="recipes" aria-selected="false">Recipes</a>
+       
+        </li>
+        <li 
+        *ngIf="authService.isAuthenticated()"
+        class="nav-item">
+            <a   class="nav-link " id="shopping-list-tab" data-toggle="tab" routerLinkActive="active"
+             [routerLink]="'shopping-list'"
+            role="tab" aria-controls="shopping-list" aria-selected="false">Shopping List</a>
+          
+         </li>
+          
+            
+           
+      </ul>
+
+
+      <ul class="nav nav-tabs" id="RegisterTab" role="tablist">
+<li class="nav-item"
+          *ngIf="!authService.isAuthenticated()">
+          <a class="nav-link"  data-toggle="modal" data-target="#signupModal" [routerLink]="'#'" routerLinkActive="active"   
+          aria-selected="false"><span class="fa fa-sign-in"></span>Register</a>
+        </li>
+        <!-- signupModal -->
+        <li class="nav-item"
+        *ngIf="!authService.isAuthenticated()">
+          <!-- <a class="nav-link" id="signin-tab" data-toggle="tab" routerLinkActive="active" [routerLink]="'signin'" role="tab" aria-controls="signin" aria-selected="false">Login</a>
+         -->
+         <a class="nav-link"  data-toggle="modal" data-target="#loginModal" href="#"
+          routerLinkActive="active"   
+         aria-selected="false"><span class="fa fa-sign-in"></span> Login</a>
+        <!-- Modal -->
+          
+
+         <!-- Modal -->
+        
+
+        </li>
+        <li class="nav-item"
+        *ngIf="authService.isAuthenticated()"
+        (click)="onLogout()">
+          <a class="nav-link" id="logout-tab" data-toggle="tab" routerLinkActive="active" [routerLink]="'/'" role="tab" aria-controls="logout" aria-selected="false">Logout</a>
+        </li>
+          
+          
+          
+        <li class="dropdown nav-item"
+        *ngIf="authService.isAuthenticated()">
+    <a class="dropdown-toggle nav-link nav-item" routerLinkActive="active" 
+        id="navbarDropdown" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+         aria-expanded="false">Manage
+    <span class="caret"></span></a>
+
+
+      
+    
+    
+    
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" style="cursor: pointer" (click)="onSaveData()"
+             >Save Data</a></li>
+      <li><a class="dropdown-item" style="cursor: pointer"  (click)="onFetchData()"
+            >Fetch Data</a></li>
+    </ul>
+  </li>
+
+      </ul>
+       
+      </div>
+     
+<hr>
+
+     
+      </nav>
+      
+    </div>
+
+
+
+        <!-- Modal login -->
+        <div #completeModal id="loginModal" class="modal fade" role="dialog">
+          <div class="modal-dialog modal-lg">
+        
+        <!-- Modal content-->
+        <div class="modal-content">
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h4 class="modal-title">Login</h4>
+        </div>
+        <div class="modal-body">
+        
+                <form role="form" method="post" id="reused_form" 
+                 #f="ngForm">
+                <p>
+                    Send your message in the form below and we will get back to you as early as possible.
+                </p>
+                
+                <div class="form-group ">
+                    <label for="email">
+                        E-mail:</label>
+                    
+                    <input type="email" id="email" name="email" ngModel class="form-control" 
+        required
+           email maxlength="50"
+            #email="ngModel">
+        
+                </div>
+                <div class="form-group">
+                    <label for="password">
+                        Password:</label>
+                        <input type="password" id="password" name="password" ngModel class="form-control"
+                        required
+                        password
+                        minlength="6"
+                        maxlength="50"
+                        #password="ngModel">
+                </div>
+                
+                
+        
+        
+        
+        
+                <button type="submit" class="btn btn-danger btn-block" data-dismiss="modal">Cancel →</button>
+        
+                <button type="button" class="btn btn-lg btn-success btn-block"
+                [disabled]="!f.valid"
+                (click)="onSignIn(f)"
+                data-dismiss="modal"
+                id="btnContactUs">Log In →</button>
+                <h3 *ngIf="nameUser">{{nameUserText}}</h3>
+        
+            </form>
+            <div id="success_message" style="width:100%; height:100%; display:none; ">
+                <h3>Sent your message successfully!</h3>
+            </div>
+           
+           
+        </div>
+        
+        </div>
+        
+         </div>
+        </div>
+
+        <!-- alert if error encounter during signup or login -->
+        <div *ngIf="nameUser" class="alert alert-danger alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>{{ nameUserText }}</strong> 
+              </div>
+
+               <!-- comment when login or signup is successful -->
+              <div *ngIf="nameUserSuccess" class="alert alert-success alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>{{ nameUserTextSuccess }}</strong> 
+                  </div>
+            
+                  <div *ngIf="commentSignup" class="alert alert-danger alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>{{ commentsignupcheck }}</strong> 
+                      </div>
+        
+                       <!-- comment when login or signup is successful -->
+                      <div *ngIf="commentSuccessSignup" class="alert alert-success alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>{{ commentSuccesssignupcheck }}</strong> 
+                          </div>
+                  
+          
+          <!-- Modal -->
+
+          
+          <!-- Modal Signup -->
+          <div #completeSignupModal id="signupModal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+          
+          <!-- Modal content-->
+          <div class="modal-content">
+          <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">×</button>
+          <h4 class="modal-title">SignUp</h4>
+          </div>
+          <div class="modal-body">
+          
+                  <form role="form" method="post" id="signup_form" 
+                   #s="ngForm">
+                  <p>
+                      Send your message in the form below and we will get back to you as early as possible.
+                  </p>
+                  
+                  <div class="form-group ">
+                      <label for="email">
+                          E-mail:</label>
+                      
+                      <input type="email" id="emailRegister" name="email"
+                       ngModel class="form-control" 
+                 required
+                 email maxlength="50"
+              #email="ngModel">
+              <span class="help-block" *ngIf="!email.valid">*valid email is required</span>
+                  </div>
+
+
+
+                  <div class="form-group">
+                      <label for="password">
+                          Password:</label>
+                          <input type="password" id="passwordRegister" 
+                          name="passwordRegister" ngModel class="form-control"
+                          required
+                          password
+                          minlength="6"
+                          maxlength="50"
+                          #passwordRegister="ngModel">
+                          <span class="help-block" *ngIf="!passwordRegister.valid">*password should be atleast 6 characters</span>
+                  </div>
+                  
+                  
+          
+          
+          
+          
+                  <button type="submit" class="btn btn-danger btn-block" data-dismiss="modal">Cancel →</button>
+          
+                  <button type="submit" class="btn btn-lg btn-success btn-block"
+                  data-dismiss="modal"
+                  (click)= "onSignUp(s)"
+                    [disabled]="!s.valid" 
+                  id="Signup">Sign Up →</button>
+                  <h3 *ngIf="commentSignup">{{ commentsignupcheck }}</h3>
+              </form>
+              
+              <div id="error_message"
+              style="width:100%; height:100%; display:none; ">
+                  <h3>Error</h3>
+                  
+          
+              </div>
+          </div>
+          
+          </div>
+          
+           </div>
+          </div>
+          <!-- Modal Signup -->

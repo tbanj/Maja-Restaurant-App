@@ -1,0 +1,120 @@
+<div class=".row .no-gutter homeMarginAuth">
+  <div class="col-12">
+    <!-- using formGroup prop means we are managing the form
+    by ourselve which will assign controls which it will work -->
+    <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+      <div class=".row .no-gutter">
+        <div class="col-12">
+          <button type="submit"
+          class="btn btn-success"
+          [disabled]="!recipeForm.valid"
+          >Save</button>
+          <button type="button"
+          class="btn btn-danger"
+          (click)="onCancel()"
+          >Cancel</button>
+        </div>
+      </div>
+       <div class=".row .no-gutter">
+        <div class="col-12">
+          <div class="form-group font-weight-bold">
+            <label for="nameRecipe"
+            >Name</label>
+            <input 
+            type="text"
+            id="nameRecipe"
+            formControlName="nameRecipe"
+            class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class=".row .no-gutter">
+        <div class="col-12">
+          <div class="form-group font-weight-bold">
+            <label for="imagePath"
+            >Image URL</label>
+            <input 
+            type="text"
+            id="imagePath"
+            formControlName="imagePath"
+            class="form-control"
+            #imagePath>
+          </div>
+        </div>
+      </div>
+      
+      <div class=".row .no-gutter">
+        <div class="col-12">
+          <img [src]="imagePath.value" class="img-responsive"
+          style="max-height: 450px">
+        </div>
+      </div>
+
+      <div class=".row .no-gutter">
+        <div class="col-12">
+          <div class="form-group font-weight-bold">
+            <label for="description"
+            >Description</label>
+            <textarea 
+            type="text"
+            id="description"
+            formControlName="description"
+            class="form-control"
+            rows="6"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+      <!-- *ngIf="ingredients.controls" -->
+      <div class="container">
+        <div class="row">
+            <div class="col-12" formArrayName="ingredients"
+            >
+              
+              <div class="row"
+              *ngFor="let ingredient of ingredients.controls; let i=index" 
+              [formArrayName]= "i"
+              style="margin-top: 10px">
+                  <div class="col-8">
+                      <input
+                      type="text"
+                      formControlName="name"
+                      id="name"
+                      class="form-control">
+                  </div>
+                  <div class="col-2 form-group  pMargin">
+                    <input 
+                    type="number"
+                    id="amount"
+                    formControlName="amount"
+                    class="form-control">
+                  </div>
+                   <div class="col-2 pMargin">
+                    <button type="button" 
+                    type="button"
+                    (click)= "onDeleteIngredients(i)"
+                    class="btn btn-danger">X</button>
+                   </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-12">
+                    <!-- if you didnt give a button a type default is submit -->
+                    <button type="button" class="btn btn-success" 
+                    (click)="onAddIngredient()">
+                          Add ingredients
+                    </button>
+                  </div>
+                </div>
+              </div>
+                
+        </div>
+      </div>
+      
+      
+
+
+    </form>
+  </div>
+</div>
+

@@ -1,0 +1,16 @@
+.hederRecipe {
+    font-size: 25px;
+}
+.lightBackground {
+    background-color: lightgray;
+}
+
+input.ng-invalid.ng-touched {
+    border: 1px solid red;
+    
+  }
+
+
+
+
+

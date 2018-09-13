@@ -1,0 +1,21 @@
+<div class=".row .no-gutter">
+    <div class="col-12">
+        <button (click)="onNewRecipe()" class="btn btn-success">New Recipes</button>
+    </div>
+
+</div>
+<div class=".row .no-gutter">
+
+    <div class="col-12">
+         <!-- <ng-content ></ng-content> -->
+        <hr>
+
+        <app-recipe-item
+        *ngFor="let recipElement of recipes; let i = index"
+         [recipe]="recipElement"
+         [index]= "i"></app-recipe-item>
+    </div>
+</div>
+<!-- <img src="{{ recipe.imagePath }}" alt="{{ recipe.name }}"> -->
+
+
