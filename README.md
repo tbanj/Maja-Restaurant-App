@@ -6,6 +6,10 @@ This is a web solution which is being implemented by the principle
  Live demonstrtion of the application is hosted at
  http://ng-maja-shopping-deployment.s3-website-us-east-1.amazonaws.com
  
+ or 
+ 
+ https://ng-recipe-maja-36cda.firebaseapp.com/
+ 
  
  
 
